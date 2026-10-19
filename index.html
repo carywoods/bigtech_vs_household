@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Rate Asymmetry Dashboard</title>
+  <title>One Rate, Two Economies</title>
+  <meta name="description" content="Why the same interest rate stops a first-time home buyer but not a $10 billion data center. Run your own mortgage numbers and explore the evidence." />
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
@@ -14,20 +15,20 @@
       --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
       --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
       --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem; --space-20: 5rem;
-      --color-bg: #f7f6f2; --color-surface: #f9f8f5; --color-surface-2: #fbfbf9; --color-surface-offset: #f3f0ec; --color-surface-offset-2: #edeae5; --color-divider: #dcd9d5; --color-border: #d4d1ca;
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+      --color-bg: #f7f6f2; --color-surface: #f9f8f5; --color-surface-2: #fbfbf9; --color-surface-offset: #f3f0ec; --color-divider: #dcd9d5; --color-border: #d4d1ca;
       --color-text: #28251d; --color-text-muted: #66635d; --color-text-faint: #908d86; --color-text-inverse: #f9f8f4;
-      --color-primary: #01696f; --color-primary-hover: #0c4e54; --color-blue: #006494; --color-orange: #da7101; --color-error: #a12c7b; --color-success: #437a22; --color-gold: #d19900;
+      --color-primary: #01696f; --color-blue: #006494; --color-orange: #da7101; --color-error: #a12c7b; --color-success: #437a22; --color-gold: #d19900;
       --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
-      --shadow-sm: 0 1px 2px rgba(26,23,18,.06); --shadow-md: 0 8px 24px rgba(26,23,18,.08); --shadow-lg: 0 20px 44px rgba(26,23,18,.12);
+      --shadow-sm: 0 1px 2px rgba(26,23,18,.06); --shadow-md: 0 8px 24px rgba(26,23,18,.08);
       --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
       --font-body: 'Satoshi', 'Inter', sans-serif; --font-display: 'General Sans', 'Inter', sans-serif;
     }
     [data-theme="dark"] {
-      --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d; --color-surface-offset: #1d1c1a; --color-surface-offset-2: #22211f; --color-divider: #262523; --color-border: #393836;
+      --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d; --color-surface-offset: #1d1c1a; --color-divider: #262523; --color-border: #393836;
       --color-text: #ece9e2; --color-text-muted: #b1aca2; --color-text-faint: #7e7a72; --color-text-inverse: #171614;
-      --color-primary: #4f98a3; --color-primary-hover: #74b0b9; --color-blue: #7db5e0; --color-orange: #fdab43; --color-error: #d163a7; --color-success: #88c765; --color-gold: #e8af34;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,.22); --shadow-md: 0 8px 24px rgba(0,0,0,.28); --shadow-lg: 0 20px 44px rgba(0,0,0,.38);
+      --color-primary: #4f98a3; --color-blue: #7db5e0; --color-orange: #fdab43; --color-error: #d163a7; --color-success: #88c765; --color-gold: #e8af34;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.22); --shadow-md: 0 8px 24px rgba(0,0,0,.28);
     }
     *,:before,:after{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
@@ -42,34 +43,37 @@
     .header{grid-column:2;position:sticky;top:0;z-index:10;border-bottom:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);background:color-mix(in oklab,var(--color-bg) 88%, transparent);backdrop-filter:blur(14px)}
     .main{grid-column:2;overflow-y:auto;overscroll-behavior:contain;padding:var(--space-6);display:grid;gap:var(--space-6)}
     .brand{display:flex;align-items:center;gap:var(--space-3)}
-    .logo{width:38px;height:38px;border-radius:12px;background:color-mix(in oklab,var(--color-primary) 10%, var(--color-surface-2));display:grid;place-items:center;color:var(--color-primary);box-shadow:var(--shadow-sm)}
+    .logo{width:38px;height:38px;border-radius:12px;background:color-mix(in oklab,var(--color-primary) 10%, var(--color-surface-2));display:grid;place-items:center;color:var(--color-primary);box-shadow:var(--shadow-sm);flex:none}
     .brand h1{font-family:var(--font-display);font-size:var(--text-lg);line-height:1.1}
     .brand p{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-1)}
     .nav{display:grid;gap:var(--space-2)}
     .nav a{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text-muted);transition:all var(--transition-interactive)}
     .nav a:hover,.nav a.active{background:var(--color-surface-2);color:var(--color-text)}
-    .side-note,.source-box,.mini-card,.card,.stat{border:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);background:var(--color-surface);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
-    .side-note,.source-box{padding:var(--space-4)}
+    .side-note,.mini-card,.card,.stat{border:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);background:var(--color-surface);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
+    .side-note{padding:var(--space-4)}
+    .side-note p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:32ch;margin-top:var(--space-2)}
+    .side-note h2{font-size:var(--text-lg);font-family:var(--font-display);line-height:1.1}
+    .byline{font-size:var(--text-xs);color:var(--color-text-faint);margin-top:auto}
     .eyebrow{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.14em;color:var(--color-text-faint)}
-    .side-note h2,.section-head h2{font-size:var(--text-lg);font-family:var(--font-display);line-height:1.1}
-    .side-note p,.source-box li{font-size:var(--text-sm);color:var(--color-text-muted);max-width:32ch}
-    .source-box ul{list-style:none;display:grid;gap:var(--space-3);margin-top:var(--space-3)}
+    .section-head h2{font-size:var(--text-lg);font-family:var(--font-display);line-height:1.1}
     .header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4) var(--space-6)}
-    .header-copy h2{font-family:var(--font-display);font-size:var(--text-xl);line-height:1.05;max-width:22ch}
+    .header-copy h2{font-family:var(--font-display);font-size:var(--text-xl);line-height:1.05;max-width:24ch}
     .header-copy p{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:var(--space-2);max-width:70ch}
     .toolbar{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap}
-    .btn{min-height:44px;padding:0 var(--space-4);border-radius:var(--radius-full);display:inline-flex;align-items:center;gap:var(--space-2);border:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);background:var(--color-surface-2);font-size:var(--text-sm);font-weight:600;transition:all var(--transition-interactive)}
+    .btn{min-height:44px;padding:0 var(--space-4);border-radius:var(--radius-full);display:inline-flex;align-items:center;gap:var(--space-2);border:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);background:var(--color-surface-2);font-size:var(--text-sm);font-weight:600;transition:all var(--transition-interactive);cursor:pointer}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
     .btn.primary{background:var(--color-primary);color:var(--color-text-inverse);border-color:transparent}
     .grid{display:grid;gap:var(--space-6)}
     .hero{grid-template-columns:1.4fr .9fr}
     .card{padding:var(--space-5)}
     .lead{font-size:var(--text-base);color:var(--color-text-muted);max-width:68ch}
+    .lead strong{color:var(--color-text)}
     .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .stat{padding:var(--space-5);display:grid;gap:var(--space-2)}
+    .stat{padding:var(--space-5);display:grid;gap:var(--space-2);align-content:start}
     .stat .label{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--color-text-faint)}
     .stat .value{font-size:clamp(1.5rem,1.2rem + 1vw,2.2rem);font-family:var(--font-display);line-height:1;font-variant-numeric:tabular-nums lining-nums}
     .stat .context{font-size:var(--text-sm);color:var(--color-text-muted)}
+    .stat.accent .value{color:var(--color-error)}
     .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
     .chart-wrap{padding-top:var(--space-4);height:300px}
     canvas{width:100% !important;height:100% !important}
@@ -79,10 +83,6 @@
     th{position:sticky;top:0;background:var(--color-surface-2);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.11em;color:var(--color-text-faint)}
     td{color:var(--color-text-muted)}
     td strong{color:var(--color-text);font-weight:700}
-    .pill{display:inline-flex;align-items:center;gap:var(--space-2);padding:.35rem .7rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;letter-spacing:.04em}
-    .pill.supported{background:color-mix(in oklab,var(--color-success) 16%, var(--color-surface));color:var(--color-success)}
-    .pill.partial{background:color-mix(in oklab,var(--color-orange) 16%, var(--color-surface));color:var(--color-orange)}
-    .pill.caution{background:color-mix(in oklab,var(--color-error) 16%, var(--color-surface));color:var(--color-error)}
     .list{display:grid;gap:var(--space-4)}
     .list article{padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-surface-2);border:1px solid color-mix(in oklab,var(--color-text) 8%, transparent)}
     .list h3{font-size:var(--text-base);margin-bottom:var(--space-2)}
@@ -90,12 +90,24 @@
     .footer-note{font-size:var(--text-xs);color:var(--color-text-faint)}
     .section-head{display:flex;justify-content:space-between;gap:var(--space-4);align-items:end;margin-bottom:var(--space-4)}
     .section-head p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:58ch}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
-    .mini-card{padding:var(--space-4)}
-    .mini-card h3{font-size:var(--text-sm);margin-bottom:var(--space-2)}
-    .mini-card p{font-size:var(--text-xs);color:var(--color-text-muted)}
-    @media (max-width: 1180px){.app{grid-template-columns:84px 1fr}.sidebar{padding:var(--space-4)}.brand-copy,.side-note,.source-box,.nav span{display:none}.brand{justify-content:center}.nav a{display:grid;place-items:center;padding:var(--space-3)}}
-    @media (max-width: 900px){html,body{overflow:auto} .app{display:block;height:auto}.sidebar{position:sticky;top:0;z-index:15;border-right:0;border-bottom:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);overflow-x:auto;overflow-y:hidden;padding:var(--space-3)}.nav{display:flex;flex-wrap:nowrap;overflow:auto}.nav a{white-space:nowrap}.header{position:relative}.main{overflow:visible;padding:var(--space-4)}.hero,.split,.kpis,.mini-grid{grid-template-columns:1fr}.header-inner{padding:var(--space-4)} }
+    /* calculator */
+    .calc{display:grid;grid-template-columns:minmax(260px,.8fr) 1.2fr;gap:var(--space-6)}
+    .field{display:grid;gap:var(--space-2);margin-bottom:var(--space-5)}
+    .field label{font-size:var(--text-sm);font-weight:600;display:flex;justify-content:space-between;gap:var(--space-3)}
+    .field label output{font-variant-numeric:tabular-nums;color:var(--color-primary)}
+    .field input[type=range]{width:100%;accent-color:var(--color-primary);min-height:32px}
+    .field .hint{font-size:var(--text-xs);color:var(--color-text-faint)}
+    .seg{display:flex;gap:var(--space-2);flex-wrap:wrap}
+    .seg button{min-height:40px;padding:0 var(--space-4);border-radius:var(--radius-full);border:1px solid var(--color-border);background:var(--color-surface-2);font-size:var(--text-sm);cursor:pointer}
+    .seg button[aria-pressed="true"]{background:var(--color-primary);color:var(--color-text-inverse);border-color:transparent}
+    .results{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+    .results .stat{box-shadow:none}
+    .callout{grid-column:1/-1;padding:var(--space-4) var(--space-5);border-radius:var(--radius-lg);background:color-mix(in oklab,var(--color-primary) 9%, var(--color-surface));color:var(--color-text);font-size:var(--text-base)}
+    .callout strong{color:var(--color-primary)}
+    .sources ol{padding-left:1.25rem;display:grid;gap:var(--space-2);font-size:var(--text-sm);color:var(--color-text-muted)}
+    .sources a{text-decoration:underline;text-underline-offset:2px}
+    @media (max-width: 1180px){.app{grid-template-columns:84px 1fr}.sidebar{padding:var(--space-4)}.brand-copy,.side-note,.byline,.nav span{display:none}.brand{justify-content:center}.nav a{display:grid;place-items:center;padding:var(--space-3)}.nav a::before{content:attr(data-short);font-size:var(--text-xs);font-weight:700}}
+    @media (max-width: 900px){html,body{overflow:auto}.app{display:block;height:auto}.sidebar{position:sticky;top:0;z-index:15;border-right:0;border-bottom:1px solid color-mix(in oklab,var(--color-text) 10%, transparent);overflow-x:auto;overflow-y:hidden;padding:var(--space-3);flex-direction:row;align-items:center}.nav{display:flex;flex-wrap:nowrap;overflow:auto}.nav a::before{content:none}.nav span{display:inline}.nav a{white-space:nowrap;display:block}.header{position:relative}.header-inner{flex-direction:column;align-items:flex-start;padding:var(--space-4)}.main{overflow:visible;padding:var(--space-4)}.hero,.split,.kpis,.calc{grid-template-columns:1fr}.results{grid-template-columns:1fr}}
     @media (prefers-reduced-motion: reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -105,51 +117,42 @@
     <aside class="sidebar">
       <div class="brand">
         <div class="logo" aria-hidden="true">
-          <svg viewBox="0 0 48 48" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Asymmetry logo">
-            <path d="M10 34L24 12l14 22" />
-            <path d="M18 34h20" />
-            <circle cx="14" cy="34" r="3" fill="currentColor" stroke="none" />
+          <svg viewBox="0 0 48 48" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 34L24 12l14 22" /><path d="M18 34h20" /><circle cx="14" cy="34" r="3" fill="currentColor" stroke="none" />
           </svg>
         </div>
         <div class="brand-copy">
-          <h1>Rate Asymmetry</h1>
-          <p>AI boom vs household tightening</p>
+          <h1>One Rate, Two Economies</h1>
+          <p>Who actually feels a rate hike?</p>
         </div>
       </div>
       <nav class="nav" aria-label="Section navigation">
-        <a href="#overview" class="active"><span>Overview</span></a>
-        <a href="#capex"><span>Capex</span></a>
-        <a href="#households"><span>Households</span></a>
-        <a href="#fed"><span>Fed signals</span></a>
-        <a href="#counter"><span>Counterarguments</span></a>
+        <a href="#overview" data-short="1" class="active"><span>The short version</span></a>
+        <a href="#calculator" data-short="2"><span>Your mortgage</span></a>
+        <a href="#lebanon" data-short="3"><span>Lebanon, Indiana</span></a>
+        <a href="#capex" data-short="4"><span>The spending boom</span></a>
+        <a href="#households" data-short="5"><span>Homes and small firms</span></a>
+        <a href="#fed" data-short="6"><span>What the Fed says</span></a>
+        <a href="#counter" data-short="7"><span>The other side</span></a>
+        <a href="#sources" data-short="8"><span>Sources</span></a>
       </nav>
       <section class="side-note">
-        <div class="eyebrow">Verdict</div>
-        <h2>Partly supported</h2>
-        <p>The strongest claim is distributional: AI infrastructure spending appears unusually resilient to high rates, while mortgages, developer finance, and small-business credit feel tightening directly.</p>
+        <div class="eyebrow">The idea</div>
+        <h2>The rate is universal. The pain is not.</h2>
+        <p>Higher rates are supposed to make everyone spend less. Some borrowers feel it the same month. Others have so much cash, and so much to lose by stopping, that they keep building.</p>
       </section>
-      <section class="source-box">
-        <div class="eyebrow">Use cases</div>
-        <ul>
-          <li>Stress-test the essay thesis.</li>
-          <li>Extract stats for a long-form feature.</li>
-          <li>Walk editors through evidence vs speculation.</li>
-        </ul>
-      </section>
+      <p class="byline">H.C. Woods · HarnessAI · Data as of October 19, 2026</p>
     </aside>
 
     <header class="header">
       <div class="header-inner">
         <div class="header-copy">
-          <h2>Big Tech can keep building through tight money. Households usually cannot.</h2>
-          <p>This editorial dashboard converts the research packet into a usable argument map: capital intensity at the top, transmission asymmetry in the middle, and the strongest objections at the bottom.</p>
+          <h2>Big Tech can keep building through high interest rates. Most of us can't.</h2>
+          <p>Same Federal Reserve. Same interest rate. Very different outcomes depending on who is borrowing. Run your own numbers, then see what is happening 30 miles northwest of Indianapolis.</p>
         </div>
         <div class="toolbar">
-          <button class="btn" data-theme-toggle aria-label="Switch color mode">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            Theme
-          </button>
-          <a class="btn primary" href="#safe-say">Safe claims</a>
+          <button class="btn" data-theme-toggle aria-label="Switch color mode">Theme</button>
+          <a class="btn primary" href="#calculator">Try the calculator</a>
         </div>
       </div>
     </header>
@@ -157,95 +160,139 @@
     <main class="main" id="main">
       <section id="overview" class="grid hero">
         <article class="card">
-          <div class="eyebrow">Central paradox</div>
+          <div class="eyebrow">The short version</div>
           <div style="margin-top:var(--space-3);display:grid;gap:var(--space-4)">
-            <p class="lead">AI may be helping keep aggregate GDP, corporate investment, and data-center construction strong enough to avoid recession-style macro readings, while simultaneously revealing how the burden of high interest rates falls hardest on households, housing, and smaller borrowers.</p>
-            <div class="pill partial">Evidence supports a qualified version</div>
-            <p class="footer-note">Best framing: monetary policy is not broken, but transmission is increasingly uneven across sectors and balance sheets.</p>
+            <p class="lead">When inflation runs hot, the Fed raises rates so people and businesses borrow and spend less. That still works. But it does not work <strong>evenly</strong>. A first-time buyer feels a higher mortgage rate immediately. A company with $100 billion a year in operating cash, racing rivals for AI, can keep pouring concrete.</p>
+            <p class="lead">The economy has to slow by some total amount. <strong>If the biggest spenders don't slow down, the rest of us may have to slow down more.</strong></p>
+            <p class="footer-note">This is a story about uneven effects, not a broken Fed. Housing costs have many causes, and AI is not the main one.</p>
           </div>
         </article>
         <article class="card">
-          <div class="eyebrow">What this app answers</div>
-          <div class="mini-grid" style="margin-top:var(--space-4);grid-template-columns:1fr;">
-            <div class="mini-card"><h3>How big is the boom?</h3><p>Capex guidance, historical analogs, and modeled buildout scenarios.</p></div>
-            <div class="mini-card"><h3>Who absorbs rate pain?</h3><p>Mortgage math, small-business borrowing, and financing access asymmetry.</p></div>
-            <div class="mini-card"><h3>What can be said safely?</h3><p>Clear separation between established, plausible, and speculative claims.</p></div>
+          <div class="eyebrow">Three questions this page answers</div>
+          <div class="list" style="margin-top:var(--space-4)">
+            <article><h3>What does a rate hike cost me?</h3><p>Plug in your own loan below.</p></article>
+            <article><h3>How big is the AI building boom?</h3><p>Bigger, relative to the economy, than the railroads, if projections hold.</p></article>
+            <article><h3>Can Big Tech really ignore rates?</h3><p>Not forever. The risk moves to developers, utilities, and lenders.</p></article>
           </div>
         </article>
       </section>
 
-      <section class="grid kpis">
-        <article class="stat"><div class="label">Projected AI buildout</div><div class="value">$10.3T</div><div class="context">Brookings scenario, 2025–2032.</div></article>
-        <article class="stat"><div class="label">Alt scenario</div><div class="value">$9.0T</div><div class="context">NBER working-paper variant.</div></article>
-        <article class="stat"><div class="label">30-year mortgage</div><div class="value">7.40%</div><div class="context">Freddie Mac, Oct. 15 2026 average.</div></article>
-        <article class="stat"><div class="label">Payment shock</div><div class="value">+$948</div><div class="context">Monthly P&I vs 3% on a $350k mortgage.</div></article>
+      <section class="grid kpis" aria-label="Key numbers">
+        <article class="stat"><div class="label">30-year mortgage</div><div class="value">7.40%</div><div class="context">Freddie Mac average, Oct. 15, 2026.</div></article>
+        <article class="stat accent"><div class="label">Payment shock</div><div class="value">+$948/mo</div><div class="context">$350k mortgage at 7.4% vs. 3%, principal and interest.</div></article>
+        <article class="stat"><div class="label">Big Tech capex, 2026</div><div class="value">$720B+</div><div class="context">Microsoft, Alphabet, Amazon, Meta guidance. Not all AI, not all U.S.</div></article>
+        <article class="stat"><div class="label">Meta in Lebanon, IN</div><div class="value">$10B+</div><div class="context">One data center campus, broke ground Feb. 2026.</div></article>
+      </section>
+
+      <section id="calculator" class="card">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Your numbers</div>
+            <h2>What does today's rate cost you?</h2>
+          </div>
+          <p>Compare any mortgage against the 3% rates many buyers locked in a few years ago. Principal and interest only; taxes and insurance not included.</p>
+        </div>
+        <div class="calc">
+          <div>
+            <div class="field">
+              <label for="amount">Loan amount <output id="amountOut">$350,000</output></label>
+              <input type="range" id="amount" min="50000" max="1500000" step="5000" value="350000" />
+            </div>
+            <div class="field">
+              <label for="rate">Today's rate <output id="rateOut">7.40%</output></label>
+              <input type="range" id="rate" min="3" max="10" step="0.05" value="7.40" />
+              <span class="hint">Freddie Mac's 30-year average on Oct. 15, 2026 was 7.40%.</span>
+            </div>
+            <div class="field">
+              <label for="baseRate">Compare to <output id="baseOut">3.00%</output></label>
+              <input type="range" id="baseRate" min="2" max="8" step="0.05" value="3.00" />
+            </div>
+            <div class="field">
+              <span style="font-size:var(--text-sm);font-weight:600">Term</span>
+              <div class="seg" role="group" aria-label="Loan term">
+                <button type="button" data-term="30" aria-pressed="true">30 years</button>
+                <button type="button" data-term="15" aria-pressed="false">15 years</button>
+              </div>
+            </div>
+          </div>
+          <div class="results" aria-live="polite">
+            <article class="stat"><div class="label">Monthly payment today</div><div class="value" id="payNow">$2,423</div><div class="context" id="payNowCtx">at 7.40%</div></article>
+            <article class="stat"><div class="label">Same loan at the lower rate</div><div class="value" id="payBase">$1,476</div><div class="context" id="payBaseCtx">at 3.00%</div></article>
+            <article class="stat accent"><div class="label">Extra every month</div><div class="value" id="diffMo">$948</div><div class="context">just because money costs more</div></article>
+            <article class="stat accent"><div class="label">Extra every year</div><div class="value" id="diffYr">$11,372</div><div class="context" id="diffLife">over the life of the loan</div></article>
+            <p class="callout" id="callout">At 3%, that same monthly payment would have carried a loan of about <strong>$575,000</strong>. Same income, very different house.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="lebanon" class="split">
+        <article class="card">
+          <div class="eyebrow">Close to home</div>
+          <div class="section-head" style="margin-top:var(--space-2)"><div><h2>Meanwhile, in Lebanon, Indiana</h2></div></div>
+          <div style="display:grid;gap:var(--space-4)">
+            <p class="lead">In February 2026, Meta broke ground on a data center campus in Lebanon, the Boone County seat, valued at <strong>more than $10 billion</strong>. It is planned at about <strong>1 gigawatt</strong> of capacity across 4 million square feet, with operations expected at the end of 2027 or early 2028.</p>
+            <p class="lead">Mortgage rates have climbed since then. The building did not stop.</p>
+            <p class="lead">Meta has also pledged to pay the full cost of the site's energy and water service, and to give <strong>$1 million a year for 20 years</strong> to a local fund that helps residents with energy bills. That raises an interesting question: why would a company help pay its neighbors' electric bills? Data centers increasingly need local consent, and consent has a price.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="eyebrow">For scale</div>
+          <div class="list" style="margin-top:var(--space-4)">
+            <article><h3>About 28,500 houses</h3><p>$10 billion would buy roughly 28,500 homes at $350,000 each, in cash, with no mortgage at all.</p></article>
+            <article><h3>One campus, one company</h3><p>Lebanon is one of dozens of large sites Meta is building, inside a 2026 capital budget the company has put at well over $100 billion.</p></article>
+            <article><h3>Same rate, same county</h3><p>A family buying its first home in Boone County and a hyperscaler building in Boone County face the same Federal Reserve. They do not face the same choices.</p></article>
+          </div>
+        </article>
       </section>
 
       <section id="capex" class="split">
         <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Capex concentration</div>
-              <h2>Five-company capex stack</h2>
-            </div>
-            <p>These numbers are not pure U.S. AI spend, but they show the extraordinary scale of infrastructure commitment among hyperscalers and Oracle.</p>
+            <div><div class="eyebrow">The spending boom</div><h2>Latest annual capital spending</h2></div>
+            <p>Billions of dollars. Fiscal years differ, and these totals include non-AI and overseas spending. 2026 plans are far higher.</p>
           </div>
-          <div class="chart-wrap"><canvas id="capexChart" aria-label="Capex bar chart" role="img"></canvas></div>
+          <div class="chart-wrap"><canvas id="capexChart" aria-label="Bar chart of latest annual capital spending by company" role="img"></canvas></div>
         </article>
         <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Historical test</div>
-              <h2>Investment share of GDP</h2>
-            </div>
-            <p>The superlative claim is conditional: if the modeled AI buildout materializes, it exceeds the major U.S. infrastructure booms listed in the research packet.</p>
+            <div><div class="eyebrow">Historical scale</div><h2>Bigger than the railroads?</h2></div>
+            <p>Average yearly investment as a share of GDP. The AI bar is a Brookings projection for 2025 to 2032, not money already spent.</p>
           </div>
-          <div class="chart-wrap"><canvas id="historyChart" aria-label="Historical GDP share chart" role="img"></canvas></div>
+          <div class="chart-wrap"><canvas id="historyChart" aria-label="Bar chart comparing infrastructure booms as share of GDP" role="img"></canvas></div>
         </article>
       </section>
 
       <section id="households" class="split">
         <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Household transmission</div>
-              <h2>Mortgage comparison</h2>
-            </div>
-            <p>A single policy regime produces sharply different monthly consequences depending on whether the borrower is a homebuyer or a cash-rich platform company.</p>
+            <div><div class="eyebrow">Households</div><h2>A $350,000 mortgage</h2></div>
+            <p>Monthly principal and interest on a 30-year loan at different rates.</p>
           </div>
-          <div class="chart-wrap"><canvas id="mortgageChart" aria-label="Mortgage payments chart" role="img"></canvas></div>
+          <div class="chart-wrap"><canvas id="mortgageChart" aria-label="Line chart of monthly mortgage payments by rate" role="img"></canvas></div>
         </article>
         <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Small business</div>
-              <h2>Equipment loan burden</h2>
-            </div>
-            <p>Five-year equipment finance illustrates the same asymmetry: rates that look incremental in percentage terms become meaningful annual cash drains.</p>
+            <div><div class="eyebrow">Small business</div><h2>A $500,000 equipment loan</h2></div>
+            <p>Annual payments on a 5-year loan. At 8.1%, the owner pays about $11,400 more a year than at 4%. That is a part-time employee, or the owner's own paycheck.</p>
           </div>
-          <div class="chart-wrap"><canvas id="bizChart" aria-label="Small business loan chart" role="img"></canvas></div>
+          <div class="chart-wrap"><canvas id="bizChart" aria-label="Bar chart of annual small business loan payments by rate" role="img"></canvas></div>
         </article>
       </section>
 
       <section id="fed" class="card">
         <div class="section-head">
-          <div>
-            <div class="eyebrow">Policy record</div>
-            <h2>Federal Reserve signals to watch</h2>
-          </div>
-          <p>Use these as anchor passages for the essay. They are the cleanest institutional support for the distributional argument.</p>
+          <div><div class="eyebrow">In their own words</div><h2>What Federal Reserve officials have said</h2></div>
+          <p>The Fed itself has started describing AI investment as unusually resistant to interest rates.</p>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr><th>Official</th><th>Date</th><th>Signal</th><th>Why it matters</th></tr>
-            </thead>
+            <thead><tr><th>Official</th><th>Date</th><th>What they said</th><th>In plain English</th></tr></thead>
             <tbody>
-              <tr><td><strong>Michelle Bowman</strong></td><td>Jan. 16, 2026</td><td>AI and data-center projects are relatively insensitive to interest rates.</td><td>Most direct support for the asymmetry thesis.</td></tr>
-              <tr><td><strong>Lisa Cook</strong></td><td>Feb. 24, 2026</td><td>AI investment is soaring despite elevated rates.</td><td>Suggests neutral-rate and transmission implications.</td></tr>
-              <tr><td><strong>Lisa Cook</strong></td><td>Sept. 28, 2026</td><td>AI appears to be adding inflationary pressures in the short run.</td><td>Supports the inflation-side argument, with timing nuance.</td></tr>
-              <tr><td><strong>Michael Barr</strong></td><td>Sept. 29, 2026</td><td>The buildout is having a measurable effect on prices.</td><td>Strong evidence that AI investment now matters macroeconomically.</td></tr>
-              <tr><td><strong>Philip Jefferson</strong></td><td>Oct. 1, 2026</td><td>AI-related investment supports growth while raising some costs.</td><td>Best bridge between resilience and household discomfort.</td></tr>
+              <tr><td><strong>Michelle Bowman</strong>, Vice Chair for Supervision</td><td>Jan. 16, 2026</td><td>AI and data-center projects are relatively insensitive to interest rates.</td><td>Rate hikes don't slow this spending much.</td></tr>
+              <tr><td><strong>Lisa Cook</strong>, Governor</td><td>Feb. 24, 2026</td><td>AI investment is soaring even though rates are elevated.</td><td>The usual brakes aren't biting here.</td></tr>
+              <tr><td><strong>Lisa Cook</strong>, Governor</td><td>Sept. 28, 2026</td><td>AI appears to be adding inflation pressure in the short run, with possible relief later.</td><td>Building it pushes prices up; using it may push them down.</td></tr>
+              <tr><td><strong>Michael Barr</strong>, Governor</td><td>Sept. 29, 2026</td><td>The buildout is having a measurable effect on prices.</td><td>This is now big enough to show up in inflation.</td></tr>
+              <tr><td><strong>Philip Jefferson</strong>, Vice Chair</td><td>Oct. 1, 2026</td><td>AI investment supports growth while raising costs in related goods and services.</td><td>Good for GDP, pricier for some inputs.</td></tr>
             </tbody>
           </table>
         </div>
@@ -254,49 +301,58 @@
       <section id="counter" class="split">
         <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Complications</div>
-              <h2>Counterarguments worth keeping</h2>
-            </div>
-            <p>The app keeps the strongest disconfirming evidence visible so the final article does not overstate the case.</p>
+            <div><div class="eyebrow">The other side</div><h2>Why this isn't the whole story</h2></div>
           </div>
           <div class="list">
-            <article><h3>The boom may be overstated.</h3><p>Company capex is not identical to U.S.-located AI infrastructure spending, and reported totals include non-AI and overseas investment.</p></article>
-            <article><h3>Rates still matter to Big Tech.</h3><p>Oracle, Amazon, leases, bonds, and project finance all show that capital costs have not disappeared; they are just distributed differently.</p></article>
-            <article><h3>AI may turn disinflationary later.</h3><p>Productivity gains could eventually offset current buildout pressure if output scales faster than demand and financing costs.</p></article>
-            <article><h3>Housing pain has many causes.</h3><p>Mortgage rates, supply shortages, insurance, taxes, and local zoning matter more directly than AI in the current affordability crisis.</p></article>
+            <article><h3>Big Tech can't ignore rates forever.</h3><p>Oracle spent $55.7 billion on equipment and buildings last fiscal year while generating $32 billion in operating cash, and borrowed heavily to cover the gap. Amazon's free cash flow fell sharply. The risk didn't disappear. It moved, onto developers, utilities, and private lenders.</p></article>
+            <article><h3>Not all of that spending is AI.</h3><p>Company totals include warehouses, overseas sites, and ordinary equipment replacement.</p></article>
+            <article><h3>AI may lower inflation later.</h3><p>If productivity gains arrive, the economy can produce more without prices rising as fast. Building is inflationary; using may not be.</p></article>
           </div>
         </article>
-        <article id="safe-say" class="card">
+        <article class="card">
           <div class="section-head">
-            <div>
-              <div class="eyebrow">Drafting guardrails</div>
-              <h2>What we can safely say</h2>
-            </div>
-            <p>These lines are phrased to survive fact-checking and keep the argument rigorous rather than rhetorical.</p>
+            <div><div class="eyebrow">Keep in mind</div><h2>What AI did not cause</h2></div>
           </div>
           <div class="list">
-            <article><h3>Well supported</h3><p>The Fed moves one rate, but that rate does not land equally across the economy. Households and small firms face retail borrowing conditions directly, while hyperscalers finance through internal cash, bonds, leases, and project structures.</p></article>
-            <article><h3>Plausible with care</h3><p>AI investment may be shifting more of monetary restraint onto housing and smaller borrowers by remaining unusually resilient during tight-money conditions.</p></article>
-            <article><h3>Avoid</h3><p>Do not say monetary policy is broken, that all capex is AI, or that AI is the primary cause of national cost-of-living stress.</p></article>
+            <article><h3>Housing is expensive for many reasons.</h3><p>Home prices, too little supply, insurance, taxes, and zoning all matter more directly than data centers.</p></article>
+            <article><h3>The projections are projections.</h3><p>The $9 to $10 trillion buildout estimates assume that announced projects actually get built. Many announced projects never are.</p></article>
+            <article><h3>The Fed is not broken.</h3><p>Rate hikes still work. They just land harder on some borrowers than others, and that was true long before AI.</p></article>
           </div>
         </article>
+      </section>
+
+      <section id="sources" class="card sources">
+        <div class="section-head"><div><div class="eyebrow">Sources</div><h2>Where these numbers come from</h2></div></div>
+        <ol>
+          <li>Freddie Mac. (2026, October 15). <a href="https://www.freddiemac.com/pmms" target="_blank" rel="noopener">Primary Mortgage Market Survey</a>.</li>
+          <li>Van Nieuwerburgh, S. (2026). <a href="https://www.brookings.edu/articles/financing-the-ai-buildout/" target="_blank" rel="noopener">Financing the AI buildout</a>. Brookings Institution.</li>
+          <li>Van Nieuwerburgh, S. (2026). <a href="https://www.nber.org/papers/w35865" target="_blank" rel="noopener">Financing the AI buildout</a> (NBER Working Paper No. 35865).</li>
+          <li>Bowman, M. (2026, January 16). <a href="https://www.federalreserve.gov/newsevents/speech/bowman20260116a.htm" target="_blank" rel="noopener">Outlook for the economy and monetary policy</a>. Board of Governors of the Federal Reserve System.</li>
+          <li>Cook, L. (2026, February 24). <a href="https://www.federalreserve.gov/newsevents/speech/cook20260224a.htm" target="_blank" rel="noopener">Opening remarks, AI and productivity panel</a>. Board of Governors of the Federal Reserve System.</li>
+          <li>Cook, L. (2026, September 28). <a href="https://www.federalreserve.gov/newsevents/speech/cook20260928a.htm" target="_blank" rel="noopener">An update on AI and the economy</a>. Board of Governors of the Federal Reserve System.</li>
+          <li>Barr, M. (2026, September 29). <a href="https://www.federalreserve.gov/newsevents/speech/barr20260929a.htm" target="_blank" rel="noopener">Economic conditions and monetary policy</a>. Board of Governors of the Federal Reserve System.</li>
+          <li>Deloitte. (2026). <a href="https://www.deloitte.com/us/en/insights/topics/economy/spotlight/tech-investment-boom.html" target="_blank" rel="noopener">AI is driving economic growth and productivity gains</a>.</li>
+          <li>Kansas City Fed. (2025). <a href="https://www.kansascityfed.org/surveys/small-business-lending-survey/new-small-business-lending-increases-as-most-interest-rates-begin-to-decline/" target="_blank" rel="noopener">Small Business Lending Survey</a>.</li>
+          <li>Bloomberg. (2026, February 11). <a href="https://bloomberg.com/news/articles/2026-02-11/meta-to-spend-more-than-10-billion-on-indiana-based-data-center" target="_blank" rel="noopener">Meta to spend more than $10 billion on Indiana-based data center</a>.</li>
+          <li>Yahoo Finance. (2026, February). <a href="https://finance.yahoo.com/news/meta-announces-plans-to-build-1-gigawatt-data-center-in-indiana-as-part-of-ai-build-out-180052467.html" target="_blank" rel="noopener">Meta announces plans to build 1-gigawatt data center in Indiana</a>.</li>
+          <li>Company filings: Microsoft FY2026, Alphabet 2025, Amazon 2025, Meta 2025, Oracle FY2026 annual results.</li>
+        </ol>
+        <p class="footer-note" style="margin-top:var(--space-4)">Mortgage and loan figures are standard amortization calculations. This page is for explanation, not financial advice.</p>
       </section>
     </main>
   </div>
 
   <script>
-    const themeToggle = document.querySelector('[data-theme-toggle]');
     const root = document.documentElement;
-    let currentTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const themeToggle = document.querySelector('[data-theme-toggle]');
+    let currentTheme = 'light';
+    try { currentTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch (e) {}
     root.setAttribute('data-theme', currentTheme);
-    const setThemeIcon = () => {
-      themeToggle.innerHTML = currentTheme === 'dark'
-        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>Theme'
-        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Theme';
-    };
-    setThemeIcon();
-    themeToggle.addEventListener('click', () => { currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', currentTheme); setThemeIcon(); updateCharts(); });
+    themeToggle.addEventListener('click', () => {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', currentTheme);
+      updateCharts();
+    });
 
     const navLinks = [...document.querySelectorAll('.nav a')];
     navLinks.forEach(link => link.addEventListener('click', () => {
@@ -304,68 +360,90 @@
       link.classList.add('active');
     }));
 
+    /* ---------- calculator ---------- */
+    const $ = id => document.getElementById(id);
+    const usd = n => '$' + Math.round(n).toLocaleString('en-US');
+    const payment = (P, annual, years) => {
+      const r = annual / 100 / 12, n = years * 12;
+      return r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n));
+    };
+    const principalFor = (M, annual, years) => {
+      const r = annual / 100 / 12, n = years * 12;
+      return r === 0 ? M * n : M * (1 - Math.pow(1 + r, -n)) / r;
+    };
+    let term = 30;
+    function calc() {
+      const P = +$('amount').value, rate = +$('rate').value, base = +$('baseRate').value;
+      $('amountOut').textContent = usd(P);
+      $('rateOut').textContent = rate.toFixed(2) + '%';
+      $('baseOut').textContent = base.toFixed(2) + '%';
+      const now = payment(P, rate, term), then = payment(P, base, term);
+      const diff = now - then;
+      $('payNow').textContent = usd(now);
+      $('payNowCtx').textContent = 'at ' + rate.toFixed(2) + '%, ' + term + ' years';
+      $('payBase').textContent = usd(then);
+      $('payBaseCtx').textContent = 'at ' + base.toFixed(2) + '%';
+      $('diffMo').textContent = (diff < 0 ? '-' : '') + usd(Math.abs(diff));
+      $('diffYr').textContent = (diff < 0 ? '-' : '') + usd(Math.abs(diff * 12));
+      const lifeExtra = diff * term * 12;
+      $('diffLife').textContent = (diff < 0 ? 'less ' : '') + usd(Math.abs(lifeExtra)) + ' over ' + term + ' years';
+      const couldBorrow = principalFor(now, base, term);
+      $('callout').innerHTML = diff > 0
+        ? 'At ' + base.toFixed(2) + '%, that same monthly payment would have carried a loan of about <strong>' + usd(Math.round(couldBorrow / 5000) * 5000) + '</strong>. Same income, very different house.'
+        : 'Your comparison rate is higher than today\'s rate, so there is no extra cost in this scenario.';
+    }
+    ['amount', 'rate', 'baseRate'].forEach(id => $(id).addEventListener('input', calc));
+    document.querySelectorAll('[data-term]').forEach(btn => btn.addEventListener('click', () => {
+      term = +btn.dataset.term;
+      document.querySelectorAll('[data-term]').forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      calc();
+    }));
+    calc();
+
+    /* ---------- charts ---------- */
     const palette = () => {
-      const styles = getComputedStyle(document.documentElement);
+      const s = getComputedStyle(root), g = v => s.getPropertyValue(v).trim();
+      return { muted: g('--color-text-muted'), primary: g('--color-primary'), blue: g('--color-blue'), orange: g('--color-orange'), success: g('--color-success'), gold: g('--color-gold'), error: g('--color-error'), grid: g('--color-divider') };
+    };
+    const opts = (fmt) => {
+      const c = palette();
       return {
-        text: styles.getPropertyValue('--color-text').trim(),
-        muted: styles.getPropertyValue('--color-text-muted').trim(),
-        primary: styles.getPropertyValue('--color-primary').trim(),
-        blue: styles.getPropertyValue('--color-blue').trim(),
-        orange: styles.getPropertyValue('--color-orange').trim(),
-        success: styles.getPropertyValue('--color-success').trim(),
-        gold: styles.getPropertyValue('--color-gold').trim(),
-        grid: styles.getPropertyValue('--color-divider').trim()
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmt(ctx.parsed.y) } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: c.muted, font: { size: 11 } } },
+          y: { grid: { color: c.grid }, ticks: { color: c.muted, font: { size: 11 }, callback: v => fmt(v) } }
+        }
       };
     };
-
-    const chartDefaults = () => {
+    let charts = [];
+    function renderCharts() {
+      if (typeof Chart === 'undefined') return;
       const c = palette();
       Chart.defaults.color = c.muted;
-      Chart.defaults.borderColor = c.grid;
       Chart.defaults.font.family = 'Satoshi, Inter, sans-serif';
-    };
-
-    const commonOptions = (stacked=false) => ({
-      responsive:true,
-      maintainAspectRatio:false,
-      plugins:{legend:{labels:{boxWidth:10,usePointStyle:true,pointStyle:'circle'}},tooltip:{displayColors:true}},
-      scales:{
-        x:{stacked,grid:{display:false},ticks:{color:palette().muted,font:{size:11}}},
-        y:{stacked,grid:{color:palette().grid},ticks:{color:palette().muted,font:{size:11}}}
-      }
-    });
-
-    let capexChart, historyChart, mortgageChart, bizChart;
-    function renderCharts(){
-      chartDefaults();
-      const c = palette();
-      capexChart = new Chart(document.getElementById('capexChart'), {
-        type:'bar',
-        data:{labels:['Microsoft','Alphabet','Amazon','Meta','Oracle'],datasets:[{label:'Latest annual capex ($B)',data:[115.9,91.4,128.3,72.2,55.7],backgroundColor:[c.primary,c.blue,c.orange,c.success,c.gold],borderRadius:8}]},
-        options:commonOptions()
-      });
-      historyChart = new Chart(document.getElementById('historyChart'), {
-        type:'bar',
-        data:{labels:['Canals','Railroads','Electrification','Highways','Telecom/Fiber','AI scenario'],datasets:[{label:'Average annual investment as % of GDP',data:[0.66,2.24,0.50,1.13,1.10,3.63],backgroundColor:[c.gold,c.blue,c.success,c.orange,c.primary,c.error||'#a12c7b'],borderRadius:8}]},
-        options:commonOptions()
-      });
-      mortgageChart = new Chart(document.getElementById('mortgageChart'), {
-        type:'line',
-        data:{labels:['3.0%','6.5%','7.0%','7.4%'],datasets:[{label:'Monthly P&I on $350k',data:[1475.61,2212.24,2328.56,2423.33],borderColor:c.primary,backgroundColor:'transparent',tension:.25,pointRadius:4,pointBackgroundColor:c.primary}]},
-        options:commonOptions()
-      });
-      bizChart = new Chart(document.getElementById('bizChart'), {
-        type:'bar',
-        data:{labels:['4.0%','6.8%','7.2%','8.1%'],datasets:[{label:'Annual debt service on $500k / 5 years',data:[110499,118242,119374,121946],backgroundColor:[c.blue,c.orange,c.orange,c.error||'#a12c7b'],borderRadius:8}]},
-        options:commonOptions()
-      });
+      charts.push(new Chart($('capexChart'), {
+        type: 'bar',
+        data: { labels: ['Microsoft', 'Alphabet', 'Amazon', 'Meta', 'Oracle'], datasets: [{ data: [115.9, 91.4, 128.3, 72.2, 55.7], backgroundColor: [c.primary, c.blue, c.orange, c.success, c.gold], borderRadius: 8 }] },
+        options: opts(v => '$' + v + 'B')
+      }));
+      charts.push(new Chart($('historyChart'), {
+        type: 'bar',
+        data: { labels: ['Canals', 'Railroads', 'Electrification', 'Highways', 'Telecom/Fiber', 'AI (projected)'], datasets: [{ data: [0.66, 2.24, 0.50, 1.13, 1.10, 3.63], backgroundColor: [c.gold, c.blue, c.success, c.orange, c.primary, c.error], borderRadius: 8 }] },
+        options: opts(v => v + '%')
+      }));
+      charts.push(new Chart($('mortgageChart'), {
+        type: 'line',
+        data: { labels: ['3.0%', '6.5%', '7.0%', '7.4%'], datasets: [{ data: [1475.61, 2212.24, 2328.56, 2423.33], borderColor: c.primary, backgroundColor: 'transparent', tension: .25, pointRadius: 5, pointBackgroundColor: c.primary }] },
+        options: opts(v => '$' + Math.round(v).toLocaleString('en-US'))
+      }));
+      charts.push(new Chart($('bizChart'), {
+        type: 'bar',
+        data: { labels: ['4.0%', '6.8%', '7.2%', '8.1%'], datasets: [{ data: [110499, 118242, 119374, 121946], backgroundColor: [c.blue, c.orange, c.orange, c.error], borderRadius: 8 }] },
+        options: opts(v => '$' + Math.round(v).toLocaleString('en-US'))
+      }));
     }
-
-    function updateCharts(){
-      [capexChart, historyChart, mortgageChart, bizChart].forEach(ch => ch && ch.destroy());
-      renderCharts();
-    }
-
+    function updateCharts() { charts.forEach(ch => ch.destroy()); charts = []; renderCharts(); }
     window.addEventListener('load', renderCharts);
   </script>
 </body>
